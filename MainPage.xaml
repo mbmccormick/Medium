@@ -1,0 +1,119 @@
+﻿<phone:PhoneApplicationPage
+    x:Class="Medium.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+    xmlns:uc="clr-namespace:Medium"
+    mc:Ignorable="d"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Background="#FFF6F6EF"
+    SupportedOrientations="Portrait"  Orientation="Portrait"
+    shell:SystemTray.IsVisible="True"
+    shell:SystemTray.BackgroundColor="#FF57AD68"
+    shell:SystemTray.ForegroundColor="#FF000000"
+    toolkit:TiltEffect.IsTiltEnabled="True"
+    DataContext="{Binding RelativeSource={RelativeSource Self}}">
+
+    <phone:PhoneApplicationPage.Resources>
+        <Style x:Key="LongListSelectorCustomStyle" TargetType="phone:LongListSelector">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="{StaticResource PhoneForegroundBrush}"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="phone:LongListSelector">
+                        <Grid Background="{TemplateBinding Background}" d:DesignWidth="480" d:DesignHeight="800">
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup x:Name="ScrollStates">
+                                    <VisualStateGroup.Transitions>
+                                        <VisualTransition GeneratedDuration="00:00:00.5"/>
+                                    </VisualStateGroup.Transitions>
+                                    <VisualState x:Name="Scrolling">
+                                        <Storyboard>
+                                            <DoubleAnimation Duration="0" To="1" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="VerticalScrollBar"/>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="NotScrolling"/>
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+                            <Grid Margin="{TemplateBinding Padding}">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="auto"/>
+                                </Grid.ColumnDefinitions>
+                                <ViewportControl x:Name="ViewportControl" HorizontalContentAlignment="Stretch" VerticalAlignment="Top" />
+                                <ScrollBar x:Name="VerticalScrollBar" Background="#7F57AD68" Grid.Column="1" Margin="4,0,4,0" Opacity="0" Orientation="Vertical"/>
+                            </Grid>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </phone:PhoneApplicationPage.Resources>
+
+    <Grid x:Name="LayoutRoot" Background="#FFF6F6EF">
+        <ProgressBar Name="prgLoading" Foreground="#FF57AD68" IsIndeterminate="True" Margin="0,0,0,0" VerticalAlignment="Top" />
+
+        <phone:Pivot Name="pivLayout" Title="MEDIUM" Foreground="Black">
+            <phone:PivotItem Header="top 100">
+                <Grid Margin="0,0,0,0">
+                    <phone:LongListSelector x:Name="lstTop100Posts" ItemsSource="{Binding Top100Posts}" Margin="0,0,0,0" Foreground="Black" Visibility="Collapsed" ScrollViewer.VerticalScrollBarVisibility="Hidden" Style="{StaticResource LongListSelectorCustomStyle}" ItemRealized="LongListSelector_ItemRealized" ItemUnrealized="LongListSelector_ItemUnrealized">
+                        <phone:LongListSelector.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel>
+                                    <uc:ValueControl Margin="12,0,0,24" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </phone:LongListSelector.ItemTemplate>
+                    </phone:LongListSelector>
+
+                    <TextBlock x:Name="txtTop100PostsLoading" Visibility="Visible" TextWrapping="Wrap" Margin="12,-6,0,0" Text="Just a moment..." Style="{StaticResource PhoneTextLargeStyle}" Foreground="#FF57AD68" />
+                    <TextBlock x:Name="txtTop100PostsEmpty" Visibility="Collapsed" TextWrapping="Wrap" Margin="12,-6,0,0" Text="Sorry, could not download posts right now." Style="{StaticResource PhoneTextLargeStyle}" Foreground="#FF57AD68" />
+                </Grid>
+            </phone:PivotItem>
+            
+            <phone:PivotItem Header="reading list">
+                <Grid Margin="0,0,0,0">
+                    <TextBlock Margin="12,-6,0,0" Text="Coming soon." Style="{StaticResource PhoneTextLargeStyle}" Foreground="#FF57AD68" />
+                </Grid>
+            </phone:PivotItem>
+
+            <phone:PivotItem Header="bookmarks">
+                <Grid Margin="0,0,0,0">
+                    <TextBlock Margin="12,-6,0,0" Text="Coming soon." Style="{StaticResource PhoneTextLargeStyle}" Foreground="#FF57AD68" />
+                </Grid>
+            </phone:PivotItem>
+        </phone:Pivot>
+    </Grid>
+
+    <phone:PhoneApplicationPage.ApplicationBar>
+        <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True" BackgroundColor="#FF57AD68" ForegroundColor="#FF000000">
+        </shell:ApplicationBar>
+    </phone:PhoneApplicationPage.ApplicationBar>
+
+    <toolkit:TransitionService.NavigationInTransition>
+        <toolkit:NavigationInTransition>
+            <toolkit:NavigationInTransition.Backward>
+                <toolkit:TurnstileTransition Mode="BackwardIn"/>
+            </toolkit:NavigationInTransition.Backward>
+            <toolkit:NavigationInTransition.Forward>
+                <toolkit:TurnstileTransition Mode="ForwardIn"/>
+            </toolkit:NavigationInTransition.Forward>
+        </toolkit:NavigationInTransition>
+    </toolkit:TransitionService.NavigationInTransition>
+    <toolkit:TransitionService.NavigationOutTransition>
+        <toolkit:NavigationOutTransition>
+            <toolkit:NavigationOutTransition.Backward>
+                <toolkit:TurnstileTransition Mode="BackwardOut"/>
+            </toolkit:NavigationOutTransition.Backward>
+            <toolkit:NavigationOutTransition.Forward>
+                <toolkit:TurnstileTransition Mode="ForwardOut"/>
+            </toolkit:NavigationOutTransition.Forward>
+        </toolkit:NavigationOutTransition>
+    </toolkit:TransitionService.NavigationOutTransition>
+
+</phone:PhoneApplicationPage>
