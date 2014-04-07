@@ -62,10 +62,12 @@ namespace Medium
 
         private void Application_Deactivated(object sender, DeactivatedEventArgs e)
         {
+            MediumClient.SaveData();
         }
 
         private void Application_Closing(object sender, ClosingEventArgs e)
         {
+            MediumClient.SaveData();
         }
 
         private void RootFrame_NavigationFailed(object sender, NavigationFailedEventArgs e)

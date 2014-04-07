@@ -21,6 +21,9 @@ namespace Medium
             webBrowserTask.Uri = new Uri(item.FriendlyUrl);
 
             webBrowserTask.Show();
+
+            App.MediumClient.MarkPostAsRead(item.id);
+            item.is_read = true;
         }
 
         private void Share_Click(object sender, RoutedEventArgs e)

@@ -11,9 +11,9 @@
     d:DesignHeight="480" d:DesignWidth="480">
 
     <StackPanel x:Name="LayoutRoot" Background="Transparent">
-        <TextBlock x:Name="txtTitle" Text="{Binding title}" TextWrapping="Wrap" Margin="0,0,0,0" Style="{StaticResource PhoneTextTitle3Style}" Foreground="#FF000000" Tap="ValueTitle_Tap" />
-        <TextBlock x:Name="txtSnippet" Text="{Binding FriendlySnippet}" TextWrapping="Wrap" Margin="0,0,0,0" Style="{StaticResource PhoneTextSubtleStyle}" Foreground="#FFB3B3B1" Visibility="{Binding FriendlySnippetVisibility}" />
-        <TextBlock x:Name="txtDescription" Text="{Binding FriendlyDescription}" TextWrapping="Wrap" Margin="0,0,0,0" Style="{StaticResource PhoneTextSubtleStyle}" Foreground="#7F57AD68" />
+        <TextBlock x:Name="txtTitle" Text="{Binding title}" TextWrapping="Wrap" Margin="0,0,0,0" Style="{StaticResource PhoneTextTitle3Style}" Foreground="{Binding title_foreground}" Tap="ValueTitle_Tap" />
+        <TextBlock x:Name="txtSnippet" Text="{Binding FriendlySnippet}" TextWrapping="Wrap" Margin="0,0,0,0" Style="{StaticResource PhoneTextSubtleStyle}" Foreground="{Binding snippet_foreground}" Visibility="{Binding FriendlySnippetVisibility}" />
+        <TextBlock x:Name="txtDescription" Text="{Binding FriendlyDescription}" TextWrapping="Wrap" Margin="0,0,0,0" Style="{StaticResource PhoneTextSubtleStyle}" Foreground="{Binding description_foreground}" />
 
         <toolkit:ContextMenuService.ContextMenu>
             <toolkit:ContextMenu Background="#FFFFFFFF">
